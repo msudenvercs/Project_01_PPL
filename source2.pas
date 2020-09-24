@@ -7,13 +7,9 @@ program Source2
 
   begin
 
-    read s;
-    i := 1;
-    acc := 0;
-    while i <= s do
-    begin
-        acc := acc + i;
-        i := i + 1
-    end
+    read x1;
+    read x2;
+    i := x1 + x2;
+    write y
 
   end.

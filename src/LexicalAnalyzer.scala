@@ -24,8 +24,15 @@ write_stmt =  ́write ́ ( identifier | literal )
 if_stmt =  ́if ́ bool_expr  ́then ́ stmt [  ́else ́ stmt ]
 while_stmt =  ́while ́ bool_expr  ́do ́ stmt
 expr = arithm_expr | bool_expr
-arithm_expr = arithm_expr (  ́+ ́ |  ́- ́ ) term | term
-term = term  ́* ́ factor | factor
+
+// arithm_expr = arithm_expr (  ́+ ́ |  ́- ́ ) term | term
+arithm_expr = term arithm_expr'
+arithm_expr' = ( '+'| '-' ) term arithm_exp' | epsilon
+
+// term = term  ́* ́ factor | factor
+term = factor term'
+term' = '*' factor term' | epsilon
+
 factor = identifier | int_literal
 literal = int_literal | bool_literal
 int_literal = digit { digit }

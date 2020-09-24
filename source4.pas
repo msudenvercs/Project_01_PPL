@@ -1,4 +1,4 @@
-program Source4
+program
 
   var x1 x2 y: Integer
 
