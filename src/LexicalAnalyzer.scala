@@ -120,6 +120,8 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
               lexeme match {
                 case "program" => return new LexemeUnit(lexeme, Token.PROGRAM)
                 case "read" => return new LexemeUnit(lexeme, Token.READ)
+                case "while" => return new LexemeUnit(lexeme, Token.WHILE)
+                case "if" => return new LexemeUnit(lexeme, Token.IF)
                 case "write" => return new LexemeUnit(lexeme, Token.WRITE)
                 case "end" => return new LexemeUnit(lexeme, Token.END)
                 case "var" => return new LexemeUnit(lexeme, Token.VAR)
@@ -136,6 +138,18 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
             if (charClass == CharClass.OPERATOR) {
               input = input.substring(1)
               lexeme += input_char
+              var noMoreChars = false
+              while (input.length() > 0 && !noMoreChars) {
+                input_char = input(0)
+                charClass = getCharClass(input_char)
+                if (charClass == CharClass.OPERATOR) {
+                  lexeme += input_char
+                  input = input.substring(1)
+                  return new LexemeUnit(lexeme, Token.IDENTIFIER)
+                }
+                else
+                  noMoreChars = true
+              }
               input_char match {
                 case '+' => return new LexemeUnit(lexeme, Token.ADD_OP)
                 case '-' => return new LexemeUnit(lexeme, Token.SUB_OP)

@@ -1,8 +1,8 @@
 program Source5
 
-  x1 x2 y: Integer
+  var x1 x2 y: Integer
 
-  begin
+
 
     read x1;
     read x2;
