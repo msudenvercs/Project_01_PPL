@@ -9,7 +9,7 @@ program Source13
 
     read x;
     read y;
-    if x > y
+    if x > y // then expected
         result := true
     else
         result := false;

@@ -84,10 +84,15 @@ class SyntaxAnalyzer(private var source: String) {
 
       // closing period
       getLexemeUnit()
-      print(lexemeUnit.toString)
 
       tree.add(new Tree(lexemeUnit.getLexeme()))
       lexemeUnit = null
+      getLexemeUnit()
+      print(lexemeUnit.toString)
+      if(lexemeUnit.getToken() != Token.EOF) {
+        throw new Exception("Syntax Analyzer Error: \"EOF\" was expected!")
+      }
+
 
     }
     else
@@ -113,7 +118,7 @@ class SyntaxAnalyzer(private var source: String) {
 
       tree.add(parseBlock())
       getLexemeUnit()
-      print(lexemeUnit.toString) // period
+//      print(lexemeUnit.toString) // period
 
       if(lexemeUnit.getToken() == Token.PERIOD) {
         tree.add(new Tree(lexemeUnit.getLexeme()))
@@ -284,11 +289,12 @@ class SyntaxAnalyzer(private var source: String) {
       lexemeUnit = null
 
       tree.add(parseBoolExp())
-      if(lexemeUnit.getToken() == Token.IDENTIFIER) {
-        getLexemeUnit()
+      getLexemeUnit()
+      if(lexemeUnit.getToken() == Token.THEN) {
+
         tree.add(new Tree(lexemeUnit.getLexeme()))
         lexemeUnit = null
-      }
+      } else throw new Exception("Syntax Analyzer Error: \"then\" was expected!")
       tree.add(parseStateX())
 //      getLexemeUnit()
 //      tree.add(new Tree(lexemeUnit.toString()))

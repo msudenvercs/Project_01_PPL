@@ -17,4 +17,4 @@ program Source15
 
   end.
 
-x
+x // EOF expected

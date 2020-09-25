@@ -131,7 +131,9 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 case "begin" => return new LexemeUnit(lexeme, Token.BEGIN)
                 case "true" => return new LexemeUnit(lexeme, Token.TRUE)
                 case "false" => return new LexemeUnit(lexeme, Token.FALSE)
+                case "then" => return new LexemeUnit(lexeme, Token.THEN)
                 case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
+
               }
             }
 

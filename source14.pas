@@ -10,9 +10,9 @@ program Source14
     read x;
     read y;
     if x > y then
-        result := true
+        result := true;
 
         result := false;
     write result
 
-  end.
+  // end expected
