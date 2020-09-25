@@ -57,9 +57,10 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
       CharClass.DIGIT
     else if (LexicalAnalyzer.BLANKS.contains(input_char))
       CharClass.BLANK
-    else if (input_char == '+' || input_char == '-' || input_char == '*' || input_char == '/' ||  input_char == '>' ||
-      input_char == '<' || input_char == '=')
+    else if (input_char == '+' || input_char == '-' || input_char == '*' || input_char == '/')
       CharClass.OPERATOR
+    else if (input_char == '>' || input_char == '<' || input_char == '=')
+      CharClass.GTLTET
     else if (input_char == '.' || input_char == ',' || input_char == ';' || input_char == ':')
       CharClass.PUNCTUATOR
     else if (input_char == '(' || input_char == ')')
@@ -128,6 +129,8 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 case "Integer" => return new LexemeUnit(lexeme, Token.INTEGER)
                 case "Boolean" => return new LexemeUnit(lexeme, Token.BOOLEAN)
                 case "begin" => return new LexemeUnit(lexeme, Token.BEGIN)
+                case "true" => return new LexemeUnit(lexeme, Token.TRUE)
+                case "false" => return new LexemeUnit(lexeme, Token.FALSE)
                 case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
               }
             }
@@ -138,14 +141,40 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
             if (charClass == CharClass.OPERATOR) {
               input = input.substring(1)
               lexeme += input_char
+//              var noMoreChars = false
+//              while (input.length() > 0 && !noMoreChars) {
+//                input_char = input(0)
+//                charClass = getCharClass(input_char)
+//                if (charClass == CharClass.OPERATOR) {
+//                  lexeme += input_char
+//                  input = input.substring(1)
+//
+//                }
+//                else
+//                  noMoreChars = true
+//              }
+              input_char match {
+                case '+' => return new LexemeUnit(lexeme, Token.ADD_OP)
+                case '-' => return new LexemeUnit(lexeme, Token.SUB_OP)
+                case '*' => return new LexemeUnit(lexeme, Token.MULT)
+                case '/' => return new LexemeUnit(lexeme, Token.DIV)
+                case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
+
+              }
+            }
+
+            // TODO: recognize operators
+            if (charClass == CharClass.GTLTET) {
+              input = input.substring(1)
+              lexeme += input_char
               var noMoreChars = false
               while (input.length() > 0 && !noMoreChars) {
                 input_char = input(0)
                 charClass = getCharClass(input_char)
-                if (charClass == CharClass.OPERATOR) {
+                if (charClass == CharClass.GTLTET) {
                   lexeme += input_char
                   input = input.substring(1)
-                  return new LexemeUnit(lexeme, Token.IDENTIFIER)
+
                 }
                 else
                   noMoreChars = true
@@ -155,7 +184,7 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 case '-' => return new LexemeUnit(lexeme, Token.SUB_OP)
                 case '*' => return new LexemeUnit(lexeme, Token.MULT)
                 case '/' => return new LexemeUnit(lexeme, Token.DIV)
-                case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
+                case _ => return new LexemeUnit(lexeme, Token.BOOLEAN)
 
               }
             }
@@ -168,7 +197,7 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
               while (input.length() > 0 && !noMoreChars) {
                 input_char = input(0)
                 charClass = getCharClass(input_char)
-                  if (charClass == CharClass.OPERATOR) {
+                  if (charClass == CharClass.GTLTET) {
                   lexeme += input_char
                   input = input.substring(1)
                     return new LexemeUnit(lexeme, Token.DEFINED)

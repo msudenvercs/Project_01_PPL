@@ -15,4 +15,5 @@ object CharClass extends Enumeration {
   val QUOTE      = Value
   val BLANK      = Value
   val OTHER      = Value
+  val GTLTET      = Value
 }
