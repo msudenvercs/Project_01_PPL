@@ -1,18 +1,18 @@
 program Source14
 
-  var
-    x: Integer;
-    y: Integer;
-    result: Boolean
+var
+  x: Integer;
+  y: Integer;
+  result: Boolean
 
-  begin
+begin
 
-    read x;
-    read y;
-    if x > y then
-        result := true;
+  read x;
+  read y;
+  if x > y then
+    result := true
 
-        result := false;
-    write result
+    result := false;
+  write result
 
-  // end expected
+end.
