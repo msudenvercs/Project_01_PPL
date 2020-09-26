@@ -135,7 +135,6 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 case "false" => return new LexemeUnit(lexeme, Token.BOOL_LITERAL)
                 case "then" => return new LexemeUnit(lexeme, Token.THEN)
                 case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
-
               }
             }
 
@@ -149,7 +148,6 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 case '*' => return new LexemeUnit(lexeme, Token.MULT)
                 case '/' => return new LexemeUnit(lexeme, Token.DIV)
                 case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
-
               }
             }
 
@@ -164,18 +162,12 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 if (charClass == CharClass.GTLTET) {
                   lexeme += input_char
                   input = input.substring(1)
-
                 }
                 else
                   noMoreChars = true
               }
               input_char match {
-                case '+' => return new LexemeUnit(lexeme, Token.ADD_OP)
-                case '-' => return new LexemeUnit(lexeme, Token.SUB_OP)
-                case '*' => return new LexemeUnit(lexeme, Token.MULT)
-                case '/' => return new LexemeUnit(lexeme, Token.DIV)
                 case _ => return new LexemeUnit(lexeme, Token.BOOLEAN)
-
               }
             }
 
