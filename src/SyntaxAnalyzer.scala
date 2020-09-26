@@ -138,7 +138,6 @@ class SyntaxAnalyzer(private var source: String) {
   private def parseBlock(): Tree = {
     val tree = new Tree("block")
     getLexemeUnit()
-
     if (lexemeUnit.getToken() != Token.EOF) {
       if(lexemeUnit.getToken() == Token.BEGIN) {
         do_switch = 2
@@ -150,48 +149,24 @@ class SyntaxAnalyzer(private var source: String) {
       tree.add(parseStatement())
 
       getLexemeUnit()
-      if(lexemeUnit.getToken() == Token.SEMICOLON) {
+      while (lexemeUnit.getToken() == Token.SEMICOLON) {
         tree.add(parsePunctuator())
         tree.add(parseStatement())
-
+        getLexemeUnit()
       }
-
-
-      getLexemeUnit()
-      if(lexemeUnit.getToken() == Token.SEMICOLON) {
-        tree.add(parsePunctuator())
-        tree.add(parseStatement())
-      }
-      else if (lexemeUnit.getToken() == Token.END) {
-        tree.add(new Tree(lexemeUnit.getLexeme()))
-        lexemeUnit = null
-
-        return tree
-      }
-
-
-
-      getLexemeUnit()
-      if(lexemeUnit.getToken() == Token.SEMICOLON) {
-        tree.add(parsePunctuator())
-        tree.add(parseStatement())
-
-      }
-
-
-      getLexemeUnit()
-      if(lexemeUnit.getToken() == Token.SEMICOLON) {
-        tree.add(parsePunctuator())
-        tree.add(parseStatement())
-      }
-      getLexemeUnit()
       if (lexemeUnit.getToken() == Token.END && do_switch == 2) {
         tree.add(new Tree(lexemeUnit.getLexeme()))
         lexemeUnit = null
+        return tree
       } else if (lexemeUnit.getToken() == Token.END && do_switch == 1) {
         throw new Exception("Syntax Analyzer Error: period was expected!")
       }
-
+      getLexemeUnit()
+      if (lexemeUnit.getToken() == Token.END) {
+        tree.add(new Tree(lexemeUnit.getLexeme()))
+        lexemeUnit = null
+        return tree
+      }
     }
 
     // TODOd: return the tree
