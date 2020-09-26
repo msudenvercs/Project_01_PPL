@@ -516,17 +516,13 @@ class SyntaxAnalyzer(private var source: String) {
       lexemeUnit = null
       tree.add(parseVardcl())
       getLexemeUnit()
-      if(lexemeUnit.getToken() == Token.SEMICOLON) {
+      while(lexemeUnit.getToken() == Token.SEMICOLON) {
         tree.add(parsePunctuator())
         lexemeUnit = null
         tree.add(parseVardcl())
+        getLexemeUnit()
       }
-      getLexemeUnit()
-      if(lexemeUnit.getToken() == Token.SEMICOLON) {
-        tree.add(parsePunctuator())
-        lexemeUnit = null
-        tree.add(parseVardcl())
-      }
+
     }
     else
       throw new Exception("Syntax Analyzer Error: \"var_sct\" was expected!")
