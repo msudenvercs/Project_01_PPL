@@ -124,14 +124,15 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
                 case "while" => return new LexemeUnit(lexeme, Token.WHILE)
                 case "do" => return new LexemeUnit(lexeme, Token.DO)
                 case "if" => return new LexemeUnit(lexeme, Token.IF)
+                case "else" => return new LexemeUnit(lexeme, Token.ELSE)
                 case "write" => return new LexemeUnit(lexeme, Token.WRITE)
                 case "end" => return new LexemeUnit(lexeme, Token.END)
                 case "var" => return new LexemeUnit(lexeme, Token.VAR)
                 case "Integer" => return new LexemeUnit(lexeme, Token.INTEGER)
                 case "Boolean" => return new LexemeUnit(lexeme, Token.BOOLEAN)
                 case "begin" => return new LexemeUnit(lexeme, Token.BEGIN)
-                case "true" => return new LexemeUnit(lexeme, Token.TRUE)
-                case "false" => return new LexemeUnit(lexeme, Token.FALSE)
+                case "true" => return new LexemeUnit(lexeme, Token.BOOL_LITERAL)
+                case "false" => return new LexemeUnit(lexeme, Token.BOOL_LITERAL)
                 case "then" => return new LexemeUnit(lexeme, Token.THEN)
                 case _ => return new LexemeUnit(lexeme, Token.IDENTIFIER)
 
@@ -222,8 +223,8 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
               input = input.substring(1)
               lexeme += input_char
               input_char match {
-                case '0' => return new LexemeUnit(lexeme, Token.FALSE)
-                case '1' => return new LexemeUnit(lexeme, Token.TRUE)
+                case '0' => return new LexemeUnit(lexeme, Token.IDENTIFIER)
+                case '1' => return new LexemeUnit(lexeme, Token.IDENTIFIER)
               }
             }
 
